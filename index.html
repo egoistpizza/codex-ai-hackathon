@@ -87,37 +87,139 @@
         .nav-logo {
             height: 22px;
             width: auto;
+            max-width: 60px;
             object-fit: contain;
             filter: grayscale(100%) brightness(1.5);
             transition: filter 0.3s ease;
         }
 
-        .nav-logo:hover {
-            filter: grayscale(0%) brightness(1);
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 5px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--text);
+            transition: 0.3s;
         }
 
         .nav-links {
-            display: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--subtext1);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 991px) {
+            nav {
+                padding: 0.8rem 1rem;
+            }
+            .logo-area {
+                gap: 0.5rem;
+            }
+            .logo {
+                font-size: 1rem;
+            }
+            .partner-logos {
+                gap: 0.4rem;
+                padding-left: 0.4rem;
+            }
+            .nav-logo {
+                height: 18px;
+                max-width: 40px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 250px;
+                height: 100vh;
+                background-color: var(--mantle);
+                flex-direction: column;
+                justify-content: center;
+                gap: 2rem;
+                transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                border-left: 1px solid var(--surface0);
+                box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.1rem;
+            }
         }
 
         @media (min-width: 992px) {
             .nav-logo {
                 height: 28px;
+                max-width: none;
             }
-            .nav-links {
-                display: flex;
-                gap: 2rem;
-            }
-            .nav-links a {
-                color: var(--subtext1);
-                text-decoration: none;
-                font-size: 0.9rem;
-                font-weight: 600;
-                transition: color 0.3s ease;
-            }
-            .nav-links a:hover {
-                color: var(--accent);
-            }
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--mauve), var(--blue));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--base);
+            text-decoration: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            z-index: 1000;
+            box-shadow: 0 10px 20px rgba(203, 166, 247, 0.3);
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
         }
 
         .hero {
@@ -150,7 +252,7 @@
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 1rem;
             background: linear-gradient(45deg, var(--mauve), var(--blue));
@@ -160,7 +262,7 @@
         }
 
         .hero p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--subtext1);
             max-width: 600px;
             margin: 0 auto 2rem auto;
@@ -171,6 +273,20 @@
         @media (min-width: 768px) {
             .hero h1 { font-size: 5rem; }
             .hero p { font-size: 1.3rem; }
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 600px) {
+            .btn-group {
+                flex-direction: row;
+            }
         }
 
         .btn {
@@ -185,6 +301,10 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             border: none;
+            white-space: nowrap;
+            width: 100%;
+            max-width: 250px;
+            text-align: center;
         }
 
         .btn:hover {
@@ -204,20 +324,24 @@
         }
 
         section {
-            padding: 5rem 2rem;
+            padding: 5rem 1.5rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 3rem;
             color: var(--text);
         }
 
         .section-title span {
             color: var(--accent);
+        }
+
+        @media (min-width: 768px) {
+            .section-title { font-size: 2.5rem; }
         }
 
         .about-grid {
@@ -280,6 +404,8 @@
         }
 
         .faq-category h3 {
+            display: block !important;
+            visibility: visible !important;
             color: var(--accent);
             font-size: 1.3rem;
             margin-bottom: 1.5rem;
@@ -361,14 +487,20 @@
         <div class="logo-area">
             <a href="#" class="logo">CODEX<span>.</span> w/</a>
             <div class="partner-logos">
-                <img src="assets/gsb_logo.png" alt="Gençlik ve Spor Bakanlığı" class="nav-logo">
-                <img src="assets/unides_logo.png" alt="ÜNİDES" class="nav-logo">
-                <img src="assets/tau_logo.png" alt="Türk-Alman Üniversitesi" class="nav-logo">
+                <img src="assets/gsb_logo.png" alt="GSB" class="nav-logo">
+                <img src="assets/unides_logo.png" alt="UNIDES" class="nav-logo">
+                <img src="assets/tau_logo.png" alt="TAU" class="nav-logo">
                 <img src="assets/infx_logo.png" alt="InformatiX" class="nav-logo">
             </div>
         </div>
         
-        <div class="nav-links">
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="nav-links" id="nav-links">
             <a href="#hakkinda">CODEX Nedir?</a>
             <a href="#sss">S.S.S.</a>
             <a href="#kulup">Hakkımızda</a>
@@ -508,16 +640,47 @@
         <div class="cta-section reveal">
             <h2 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--text);">Sorularınız mı var?</h2>
             <p style="color: var(--subtext1); margin-bottom: 2rem;">Bize ulaşın veya hemen başvurunuzu tamamlayın.</p>
-            <a href="https://youtu.be/dQw4w9WgXcQ?si=Cg21cLrg4DYiD2Jz" target="_blank" class="btn btn-outline" style="margin-right: 1rem;">İletişim Formu</a>
-            <a href="https://youtu.be/dQw4w9WgXcQ?si=Cg21cLrg4DYiD2Jz" target="_blank" class="btn">Başvuru Yap</a>
+            <div class="btn-group">
+                <a href="https://youtu.be/dQw4w9WgXcQ?si=Cg21cLrg4DYiD2Jz" target="_blank" class="btn btn-outline">İletişim Formu</a>
+                <a href="https://youtu.be/dQw4w9WgXcQ?si=Cg21cLrg4DYiD2Jz" target="_blank" class="btn">Başvuru Yap</a>
+            </div>
         </div>
     </section>
+
+    <a href="#" class="back-to-top" id="back-to-top">
+        <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+    </a>
 
     <footer>
         <p>&copy; 2026 Türk-Alman Üniversitesi InformatiX Kulübü. Tüm Hakları Saklıdır.</p>
     </footer>
 
     <script>
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+        const backToTop = document.getElementById('back-to-top');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+            reveal();
+        });
+
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -530,7 +693,6 @@
                 }
             }
         }
-        window.addEventListener("scroll", reveal);
         reveal();
 
         const canvas = document.getElementById('hero-canvas');
